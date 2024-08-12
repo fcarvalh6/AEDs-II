@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//-- AULA 02: Listas Lineares --
+//-- AULA 02: Listas Lineares I --
 
 /*  Listas lineares são as estruturas de dados de manipulação
 mais simples.
