@@ -1,29 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void dobra_val(int n){
-    n = n*2;
-    printf("%d\n", n);
-    printf("%p\n", &n);
-}
+void dobra_val(int n);
 
-void dobra_ref(int *n){
-    *n = (*n)*2; //onde n aponta = num1
-    printf("%d\n", *n);
-    printf("%p\n", n);
-}
+void dobra_ref(int *n);
 
-void preenche(int *p, int tam){
-    for(int i = 0; i < tam; i++){
-        *(p + i) = i + i;
-    }
-}
+void preenche(int *p, int tam);
 
-void imprime(int *p, int tam){
-    for(int i = 0; i < tam; i++){
-        printf("%d\n", *(p + i));
-    }
-}
+void imprime(int *p, int tam);
 
 typedef struct pf{
     char nome[50];
@@ -31,31 +15,13 @@ typedef struct pf{
     int idade;
 }pessoaFisica;
 
-void imprimeStruct(pessoaFisica p){
-    printf("Nome: %s\n", p.nome);
-    printf("Sexo: %c\n", p.sexo);
-    printf("Idade: %i\n", p.idade);
-}
+void imprimeStruct(pessoaFisica p);
 
-void defineSexo(char* sexo){
-    printf("Informe o sexo: ");
-    scanf("%c", sexo);
-}
+void defineSexo(char* sexo);
 
-void defineNome(char* nome){
-    printf("Informe o nome: ");
-    scanf("%s", nome);
-}
+void defineNome(char* nome);
 
-void preencheStruct(pessoaFisica* p){
-    printf("Informe o nome: ");
-    scanf("%s", &((*p).nome[0])); //*p.nome causa erro de compilação, (*p).nome funciona
-    getchar();
-    printf("Informe o sexo: ");
-    scanf("%c", &p->sexo);
-    printf("Informe a idade: ");
-    scanf("%d", &((*p).idade));
-}
+void preencheStruct(pessoaFisica* p);
 
 int main() {
 // -- PONTEIROS EM LINGUAGEM C --
@@ -241,4 +207,54 @@ se a struct é passada como valor
     imprimeStruct(pf);
 
     return 0;
+}
+
+void dobra_val(int n){
+    n = n*2;
+    printf("%d\n", n);
+    printf("%p\n", &n);
+}
+
+void dobra_ref(int *n){
+    *n = (*n)*2; //onde n aponta = num1
+    printf("%d\n", *n);
+    printf("%p\n", n);
+}
+
+void preenche(int *p, int tam){
+    for(int i = 0; i < tam; i++){
+        *(p + i) = i + i;
+    }
+}
+
+void imprime(int *p, int tam){
+    for(int i = 0; i < tam; i++){
+        printf("%d\n", *(p + i));
+    }
+}
+
+void imprimeStruct(pessoaFisica p){
+    printf("Nome: %s\n", p.nome);
+    printf("Sexo: %c\n", p.sexo);
+    printf("Idade: %i\n", p.idade);
+}
+
+void defineSexo(char* sexo){
+    printf("Informe o sexo: ");
+    scanf("%c", sexo);
+}
+
+void defineNome(char* nome){
+    printf("Informe o nome: ");
+    scanf("%s", nome);
+}
+
+void preencheStruct(pessoaFisica* p){
+    printf("Informe o nome: ");
+    scanf("%s", &((*p).nome[0])); //*p.nome causa erro de compilação, (*p).nome funciona
+    getchar();
+    printf("Informe o sexo: ");
+    scanf("%c", &p->sexo);
+    printf("Informe a idade: ");
+    scanf("%d", &((*p).idade));
 }
