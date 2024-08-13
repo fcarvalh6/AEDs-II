@@ -25,6 +25,38 @@ void imprime(int *p, int tam){
     }
 }
 
+typedef struct pf{
+    char nome[50];
+    char sexo;
+    int idade;
+}pessoaFisica;
+
+void imprimeStruct(pessoaFisica p){
+    printf("Nome: %s\n", p.nome);
+    printf("Sexo: %c\n", p.sexo);
+    printf("Idade: %i\n", p.idade);
+}
+
+void defineSexo(char* sexo){
+    printf("Informe o sexo: ");
+    scanf("%c", sexo);
+}
+
+void defineNome(char* nome){
+    printf("Informe o nome: ");
+    scanf("%s", nome);
+}
+
+void preencheStruct(pessoaFisica* p){
+    printf("Informe o nome: ");
+    scanf("%s", &((*p).nome[0])); //*p.nome causa erro de compilação, (*p).nome funciona
+    getchar();
+    printf("Informe o sexo: ");
+    scanf("%c", &p->sexo);
+    printf("Informe a idade: ");
+    scanf("%d", &((*p).idade));
+}
+
 int main() {
 // -- PONTEIROS EM LINGUAGEM C --
 
@@ -145,6 +177,68 @@ variáveis diferentes e independentes.
     }
 
     free(pontd);
+
+//PARTE 5: Ponteiros e dimensões
+    printf("PARTE 5\n");
+
+/*  Anteriormente, vimos como a alocação dinâmica usando malloc pode ser usada para ter funcionalidade bastante
+parecida com a de um vetor, agora veremos como figuras com mais dimensões podem ser criadas.
+    A estrutura "padrão" de uma matriz faz uso de um ponteiro de ponteiro que aponta para um vetor de ponteiros,
+cada ponteiro deste vetor corresponde a uma linha da matriz e aponta por sua vez para um vetor de valores.
+*/
+    int num_linhas = 2;
+    int num_colunas = 4;
+
+    int matriz[num_linhas][num_colunas]; //cria uma matriz com duas linhas e quatro colunas
+
+    int **pontlinhas = malloc(num_linhas * sizeof(int)); //forma um vetor de ponteiros correspondente às linhas
+
+    for(int i = 0; i < num_linhas; i++){
+        *(pontlinhas + i) = malloc(num_colunas * sizeof(int)); //forma um vetor de valores correspondente às colunas
+        for(int j = 0; j < num_colunas; j++){
+            *(*(pontlinhas + i) + j) = i + j; //pont[i][j] = i + j é uma notação válida
+        }
+    }
+
+    for(int i = 0; i < num_linhas; i++){
+        for(int j = 0; j < num_colunas; j++)
+            printf("%4d", *(*(pontlinhas + i) + j));
+        printf("\n");
+    }
+    printf("\n");
+/*  Agora como a memória é liberada?
+*/
+
+    for(int i = 0; i < num_linhas; i++){
+        free(*(pontlinhas + i));
+    }
+
+//    free(pontlinhas);
+
+/*  Primeira dimensão: ponteiro; Segunda dimensão: ponteiro de ponteiro; Terceira dimensão: ponteiro de ponteiro de ponteiro! 
+*/
+
+//EXTRA: struct em funções
+    printf("EXTRA\n");
+
+/*  ver o typedef no início do código e as funções imprimeStruct, defineSexo e defineNome
+*/
+    pessoaFisica pf;
+
+    pf.sexo = 'f';
+    pf.idade = 18;
+
+/* vetores ou matrizes sempre são passados por referência, mas vetores dentro de structs não seguem essa regra
+se a struct é passada como valor
+*/
+
+    defineSexo(&pf.sexo);
+
+    defineNome(&pf.nome[0]);
+
+    preencheStruct(&pf);
+
+    imprimeStruct(pf);
 
     return 0;
 }
