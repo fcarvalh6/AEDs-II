@@ -35,8 +35,8 @@ int insere(no n){
 }
 
 //FUNÇÃO DE REMOÇÃO | retorna NULL no caso de pilha vazia; se não, o elemento do topo 
-*no remove(){
-    *no ret = NULL;
+no* remove(){
+    no* ret = NULL;
     if(t != -1){
         ret = malloc(sizeof(no));
         *ret = pilha[t];
