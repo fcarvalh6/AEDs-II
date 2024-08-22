@@ -63,7 +63,8 @@ int insere(no* n){
 }
 
 no* rem(int rm){
-    no* ret = NULL;
+    no* ret = malloc(sizeof(no));
+    ret = NULL;
     busca(rm, &ant, &pont);
     if(pont != NULL){
         (*ant).prox = (*pont).prox;
