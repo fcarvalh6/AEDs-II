@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//-- AULA 04: Alocação Sequencial II --
+
 /*  O armazenamento sequencial de listas é empregado, normalmente, quando as estruturas sofrem poucas alterações
 ao longo do tempo. Também é empregado em casos particulares de listas.
     Nesse caso, a situação favorável é aquela em que inserções e remoções não acarretam movimentação de nós, tais
