@@ -1,4 +1,3 @@
 *.exe
 .vscode
-objects
 *.o
