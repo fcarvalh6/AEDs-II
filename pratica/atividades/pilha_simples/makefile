@@ -1,7 +1,7 @@
 # Automatizando o makefile
 
 # Nome do projeto
-PROJ_NAME=lista
+PROJ_NAME=pilha
 
 # Arquivos .c
 C_SOURCE=$(wildcard *.c)
