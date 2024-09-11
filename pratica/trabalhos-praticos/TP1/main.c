@@ -6,7 +6,10 @@ typedef struct no_ {
     int y;
     struct no_* prox;
 } no;
-
+/*TODO: - implementar funções
+        - makefile?
+        - resolver problemas com lab 1
+*/
 //Função de leitura de labirinto. Recebe endereço do labirinto e o imprime.
 void printlab(char L[10][10]){
     for(int i = 0; i < 10; i++){
@@ -39,10 +42,15 @@ no* pop(no** t){
     } else return NULL;
 }
 
-int main(){
+int main(int argc, char* argv[]){
+
+    if(argc != 2){
+        printf("Número inválido de argumentos\n");
+        return -1;
+    } else printf("Resolução do labirinto %s", argv[1]);
 
     //LEITURA
-    FILE* arq = fopen("labirintos/labirinto3.txt", "r");
+    FILE* arq = fopen(argv[1], "r");
     
     if(arq == NULL){
         printf("ERRO! Arquivo não foi encontrado!\n");
