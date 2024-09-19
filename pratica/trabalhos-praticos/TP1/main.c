@@ -8,7 +8,7 @@ typedef struct no_ {
     struct no_* prox;
 } no;
 
-/*TODO: - makefile?
+/*TODO: 
         - resolver problemas com lab 1
 */
 
@@ -108,6 +108,7 @@ int main(int argc, char* argv[]){
                 case 83://83 = S
                 push(xa-1, ya, &cam);
                 saida = 0;
+                conta++;
                 break;
             }
         }
@@ -123,6 +124,7 @@ int main(int argc, char* argv[]){
                 case 83://83 = S
                 push(xa, ya-1, &cam);
                 saida = 0;
+                conta++;
                 break;
             }
         }
@@ -138,6 +140,7 @@ int main(int argc, char* argv[]){
                 case 83://83 = S
                 push(xa+1, ya, &cam);
                 saida = 0;
+                conta++;
                 break;
             }
         }
@@ -153,10 +156,12 @@ int main(int argc, char* argv[]){
                 case 83://83 = S
                 push(xa, ya+1, &cam);
                 saida = 0;
+                conta++;
                 break;
             }
         }
-        if(saida == 1){
+    
+    if(saida == 1){
             switch(conta){
 
                 case 1://há apenas um caminho a ser percorrido
@@ -188,12 +193,6 @@ int main(int argc, char* argv[]){
                 break;
             }
         }
-    }
-
-
-    if(conta == 1){//caso especial, existe um endereço que não é saída em cima de saída
-        tmp = pop(&cam);
-        free(tmp);
     }
 
     while(bif != NULL){//esvazia bif
