@@ -15,7 +15,7 @@ Marc Cucurella,Lateral esquerdo,Spain,Chelsea FC,25
 Ian Maatsen,Lateral esquerdo,Netherlands,Chelsea FC,21
 Reece James,Lateral direito,England,Chelsea FC,23
 Malo Gusto,Lateral direito,France,Chelsea FC,20
-Moisés Caicedo,Volante,Ecuador,Chelsea FstrtokC,21
+Moisés Caicedo,Volante,Ecuador,Chelsea FC,21
 Roméo Lavia,Volante,Belgium,Chelsea FC,19
 Lesley Ugochukwu,Volante,France,Chelsea FC,19
 Enzo Fernández,Meia,Argentina,Chelsea FC,22
@@ -79,7 +79,7 @@ Reiss Nelson,Meia direito,England,Arsenal FC,23
 Gabriel Jesus,Centroavante,Brazil,Arsenal FC,26
 Eddie Nketiah,Centroavante,England,Arsenal FC,24
 Alisson,Goleiro,Brazil,Liverpool FC,31
-Caoimhín Kelleher,Goleiro,Ireland,Liverpstrtokool FC,24
+Caoimhín Kelleher,Goleiro,Ireland,Liverpool FC,24
 Adrián,Goleiro,Spain,Liverpool FC,36
 Ibrahima Konaté,Zagueiro,France,Liverpool FC,24
 Virgil van Dijk,Zagueiro,Netherlands,Liverpool FC,32
@@ -123,7 +123,7 @@ Scott McTominay,Volante,Scotland,Manchester United,26
 Donny van de Beek,Meia,Netherlands,Manchester United,26
 Kobbie Mainoo,Meia,England,Manchester United,18
 Bruno Fernandes,Meia atacante,Portugal,Manchester United,29
-Mason Mount,Meia atacante,England,Manchestrtokster United,24
+Mason Mount,Meia atacante,England,Manchester United,24
 Christian Eriksen,Meia atacante,Denmark,Manchester United,31
 Hannibal,Meia atacante,Tunisia,Manchester United,20
 Shola Shoretire,Meia atacante,England,Manchester United,19
@@ -135,7 +135,7 @@ Amad Diallo,Meia direito,Cote d'Ivoire,Manchester United,21
 Facundo Pellistri,Meia direito,Uruguay,Manchester United,21
 Rasmus Højlund,Centroavante,Denmark,Manchester United,20
 Anthony Martial,Centroavante,France,Manchester United,27
-Thibaut Courtois,Goleiro,Belgium,Real Madstrtokrid,31
+Thibaut Courtois,Goleiro,Belgium,Real Madrid,31
 Kepa Arrizabalaga,Goleiro,Spain,Real Madrid,29
 Andriy Lunin,Goleiro,Ukraine,Real Madrid,24
 Éder Militão,Zagueiro,Brazil,Real Madrid,25
@@ -154,7 +154,21 @@ Toni Kroos,Meia,Germany,Real Madrid,33
 Dani Ceballos,Meia,Spain,Real Madrid,27
 Luka Modric,Meia,Croatia,Real Madrid,38
 Brahim Díaz,Meia atacante,Spain,Real Madrid,24
-Arda Güler,Meia atacante,Turkey,Real Madridstrtok
+Arda Güler,Meia atacante,Turkey,Real Madrid,18
+Vinicius Junior,Meia esquerdo,Brazil,Real Madrid,23
+Rodrygo,Meia direito,Brazil,Real Madrid,22
+Joselu,Centroavante,Spain,Real Madrid,33
+Marc-André ter Stegen,Goleiro,Germany,FC Barcelona,31
+Iñaki Peña,Goleiro,Spain,FC Barcelona,24
+Ronald Araújo,Zagueiro,Uruguay,FC Barcelona,24
+Jules Koundé,Zagueiro,France,FC Barcelona,24
+Andreas Christensen,Zagueiro,Denmark,FC Barcelona,27
+Iñigo Martínez,Zagueiro,Spain,FC Barcelona,32
+Alejandro Balde,Lateral esquerdo,Spain,FC Barcelona,20
+Marcos Alonso,Lateral esquerdo,Spain,FC Barcelona,32
+João Cancelo,Lateral direito,Portugal,FC Barcelona,29
+Sergi Roberto,Lateral direito,Spain,FC Barcelona,31
+Oriol Romeu,Volante,Spain,FC Barcelona,32
 Pedri,Meia,Spain,FC Barcelona,20
 Gavi,Meia,Spain,FC Barcelona,19
 Frenkie de Jong,Meia,Netherlands,FC Barcelona,26
@@ -166,7 +180,7 @@ Lamine Yamal,Meia direito,Spain,FC Barcelona,16
 Ferran Torres,Meia direito,Spain,FC Barcelona,23
 Robert Lewandowski,Centroavante,Poland,FC Barcelona,35
 Álex Remiro,Goleiro,Spain,Real Sociedad,28
-Unai Marrero,Goleiro,Spain,Real Sociedad,2strtok2
+Unai Marrero,Goleiro,Spain,Real Sociedad,22
 Robin Le Normand,Zagueiro,Spain,Real Sociedad,26
 Igor Zubeldia,Zagueiro,Spain,Real Sociedad,26
 Aritz Elustondo,Zagueiro,Spain,Real Sociedad,29
@@ -179,7 +193,7 @@ Martín Zubimendi,Volante,Spain,Real Sociedad,24
 Urko González de Zarate,Volante,Spain,Real Sociedad,22
 Mikel Merino,Meia,Spain,Real Sociedad,27
 Beñat Turrientes,Meia,Spain,Real Sociedad,21
-Jon Ander Olasagasti,Meia,Spain,Real Sociestrtokdad,23
+Jon Ander Olasagasti,Meia,Spain,Real Sociedad,23
 Brais Méndez,Meia atacante,Spain,Real Sociedad,26
 Arsen Zakharyan,Meia atacante,Russia,Real Sociedad,20
 Pablo Marín,Meia atacante,Spain,Real Sociedad,20

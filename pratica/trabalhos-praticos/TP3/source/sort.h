@@ -18,9 +18,8 @@ void swap(tabela v[], int j, int k);
 void bubbleSort(tabela v[], int n, int *cmp, int *trc);
 int reparticao(tabela v[], int inf, int sup);
 void quickSort(tabela v[], int inf, int sup);
-/*
 int encontraMax(int v[], int n);
-void radixSort(int v[], int n);
-*/
+void radixSort(tabela* arr, int n);
+
 
 #endif

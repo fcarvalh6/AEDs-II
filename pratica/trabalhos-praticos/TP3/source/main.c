@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "sort.h"
 
 /*TRABALHO PRÁTICO 3 - AEDs II
@@ -135,21 +136,26 @@ int main(int argc, char* argv[]){
         -o ordenamento prossegue por meio do algoritmo escolhido
     */
 
-    int *troca, *comp;//trocas e comparações feitas durante a execução do arquivo
+    int *troca, *comp, *mem;//trocas e comparações feitas durante a execução do arquivo
+    clock_t inicio = clock();
 
     switch(alg){
         case 1:
-        printf("BubbleSort escolhido, realizando o ordenamento\n");
+        printf("\nBubbleSort escolhido, realizando o ordenamento\n");
         bubbleSort(jogadores, linha, comp, troca);
         break;
         case 2:
-        printf("QuickSort escolhido, realizando o ordenamento\n");
+        printf("\nQuickSort escolhido, realizando o ordenamento\n");
         quickSort(jogadores, 0, linha-1);
         break;
         case 3:
-        printf("RadixSort escolhido, realizando o ordenamento\n");
+        printf("\nRadixSort escolhido, realizando o ordenamento\n");
+        radixSort(jogadores, linha);
         break;
     }
+
+    clock_t fim = clock();
+    double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
 
     /*IMPRESSÃO DA TABELA ORDENADA E INFORMAÇÕES ADICIONAIS
     */
@@ -157,5 +163,10 @@ int main(int argc, char* argv[]){
     printf("\tTabela de jogadores após o ordenamento: \n\n");
     printa(jogadores, linha);
     
+    printf("\nInformações adicionais:\n");
+    printf("Tempo de execução: %f\n", tempo);
+    printf("Trocas: %d, Comparações: %d\n", *troca, *comp);
+    printf("Gasto de memória: %d\n", *mem);
+
     return 0;
 }
