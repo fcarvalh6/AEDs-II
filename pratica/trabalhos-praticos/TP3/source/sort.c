@@ -80,21 +80,30 @@ void swap(tabela v[], int j, int k){
 */
 
 //ordena o vetor por meio do algorimo bubblesort
-void bubbleSort(tabela v[], int n, int *cmp, int *trc){
+void bubbleSort(tabela v[], int n, int *cmp, int *trc, long unsigned int *mem){
+
+    (*mem) += sizeof(bool);//contador de gasto de memória
     bool trocou;//registra se houve troca naquela iteração
+
+    (*mem) += sizeof(int);//referente à variável de índice
     for (int i = 0; i < n - 1; i++) {
+
         trocou = false;//no início da iteração o valor é definido como falso
         for (int j = 0; j < n - i - 1; j++) {
-            *cmp++;//contador de comparações
+
+            (*cmp)++;//contador de comparações
             if (cmpNorm(v[j].nome, v[j+1].nome) > 0) {//se v[j] for maior que v[j+1]
+
                 swap(v, j, j+1);//troca os valores, colocando o maior à direita
-                *trc++;//contador de trocas
+                (*trc)++;//contador de trocas
                 trocou = true;//houve troca
             }
         }
+        (*cmp)++;
         if (trocou == false)
             break;//se não houve nenhuma troca, o vetor já está ordenado
     }
+    (*mem) += sizeof(tabela);//referente à variável tmp dentro do swap (AAAAAAAAAAAAAAAAAAAAAAAAAAAA)
 }
 
 /*QUICK SORT
@@ -107,31 +116,32 @@ void bubbleSort(tabela v[], int n, int *cmp, int *trc){
 */
 
 //reparte o vetor
-int reparticao(tabela v[], int inf, int sup) {
+int reparticao(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned int *mem) {
     
+    (*mem) += sizeof(v[sup].nome);
     char* pivo = v[sup].nome;//essa função sempre escolhe o último valor como pivô
     
     int i = inf - 1;//i guarda um índice e é iniciado como estando fora do vetor
 
     for (int j = inf; j <= sup - 1; j++) { //para cada casa do vetor
-        if (cmpNorm(v[j].nome, pivo) < 0) { //joga todos os valores menores para esquerda e os maiores para a direita||| v[j] < pivot
+        if (cmpNorm(v[j].nome, pivo) < 0) { //joga todos os valores menores para esquerda e os maiores para a direita
             i++;
             swap(v, i, j);//TODO: descrever melhor indices
         }
     }
     
-    swap(v, i+1, sup);//coloca o pivô no meio dos valores ||| &v[i + 1], &v[sup]  
+    swap(v, i+1, sup);//coloca o pivô no meio dos valores 
     return i + 1;//retorna a posição do pivô
 }
 
 //ordena o vetor por meio do algoritmo quicksort
-void quickSort(tabela v[], int inf, int sup) {
+void quickSort(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned int *mem) {
     if (inf < sup) {
         
-        int ir = reparticao(v, inf, sup);//retorno da função repartição é o índice do pivô
+        int ir = reparticao(v, inf, sup, cmp, trc, mem);//retorno da função repartição é o índice do pivô
 
-        quickSort(v, inf, ir - 1); //TODO: explicar melhor
-        quickSort(v, ir + 1, sup);
+        quickSort(v, inf, ir - 1, cmp, trc, mem);//separa o vetor à esquerda do pivô
+        quickSort(v, ir + 1, sup, cmp, trc, mem);//separa o vetor à direita do pivô
     }
 }
 
@@ -139,43 +149,44 @@ void quickSort(tabela v[], int inf, int sup) {
 
 */
 
-// Find the maximum length of the "nome" field in the array
-int getMaxNomeLength(tabela tab[], int n) {
-    int maxLen = 0;
-    for (int i = 0; i < n; i++) {
-        int len = strlen(tab[i].nome);
-        if (len > maxLen) {
-            maxLen = len;
+//Encontra o tamanho máximo de nome na tabela
+int nomeMax(tabela tab[], int n) {
+    int max = 0;//guarda o tamanho máximo do nome
+    for (int i = 0; i < n; i++) {//para cada casa da tabela
+        int tam = strlen(tab[i].nome);//tamanho do nome do índice analisado
+        if (tam > max) {//se o tamanho do índice analisado for maior que o máximo
+            max = tam;//este é o novo máximo
         }
     }
-    return maxLen;
+    return max;//retorna o tamanho máximo do nome
 }
 
-// Counting sort helper for Radix Sort (sorting by character at position `pos`)
-void countingSortByNome(tabela tab[], int n, int pos) {
-    int count[256] = {0}; // Counting array for ASCII values
-    tabela* output = (tabela*)malloc(n * sizeof(tabela));
+//counting sort é usado para ordenar os caracteres na posição pos
+void countingSortByNome(tabela v[], int n, int pos) {
 
-    // Count occurrences of characters at `pos` in each `nome`
-    for (int i = 0; i < n; i++) {
-        char c = pos < strlen(tab[i].nome) ? tiraAcento(&tab[i].nome[pos]) : 0; // 0 for shorter strings
-        count[(unsigned char)c]++;
+    int count[256] = {0}; //vetor para contar os valores ASCII
+    tabela* output = malloc(n * sizeof(tabela)); //tabela criada para a saída da função
+
+    //conta quantas vezes os caracteres aparecem na posição pos em cada nome
+    for (int i = 0; i < n; i++) {//para todas as casas da tabela passada
+        //se a posição for menor que o tamanho do nome, o nome possui caracter naquela posição
+        char c = pos < strlen(v[i].nome) ? tiraAcento(&v[i].nome[pos]) : 0;//se a condição é verdadeira, c é o caracter, senão é 0 (caso de nome menor)
+        count[(unsigned char)c]++;//conta a ocorrência desse caracter
     }
 
     // Compute cumulative counts
-    for (int i = 1; i < 256; i++) {
+    for (int i = 1; i < 256; i++)
         count[i] += count[i - 1];
-    }
 
     // Build the output array
     for (int i = n - 1; i >= 0; i--) {
-        char c = pos < strlen(tab[i].nome) ? tiraAcento(&tab[i].nome[pos]) : 0;
-        output[--count[(unsigned char)c]] = tab[i];
+        char c = pos < strlen(v[i].nome) ? tiraAcento(&v[i].nome[pos]) : 0;
+        output[--count[(unsigned char)c]] = v[i];
     }
 
     // Copy the sorted data back to the original array
     for (int i = 0; i < n; i++) {
-        tab[i] = output[i];
+        v[i] = output[i];
     }
 
     free(output);
@@ -183,7 +194,7 @@ void countingSortByNome(tabela tab[], int n, int pos) {
 
 // Radix Sort implementation
 void radixSort(tabela tab[], int n) {
-    int maxLen = getMaxNomeLength(tab, n);
+    int maxLen = nomeMax(tab, n);
 
     // Perform counting sort for each character position from right to left
     for (int pos = maxLen - 1; pos >= 0; pos--) {

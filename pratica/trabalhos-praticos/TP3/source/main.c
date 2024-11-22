@@ -136,18 +136,27 @@ int main(int argc, char* argv[]){
         -o ordenamento prossegue por meio do algoritmo escolhido
     */
 
-    int *troca, *comp, *mem;//trocas e comparações feitas durante a execução do arquivo
+    int troca, comp;//trocas e comparações feitas durante a execução do arquivo
+    troca = 0;
+    comp = 0;
+
+    long unsigned int mem;
+    mem = 0;
+
     clock_t inicio = clock();
 
     switch(alg){
+
         case 1:
         printf("\nBubbleSort escolhido, realizando o ordenamento\n");
-        bubbleSort(jogadores, linha, comp, troca);
+        bubbleSort(jogadores, linha, &comp, &troca, &mem);
         break;
+
         case 2:
         printf("\nQuickSort escolhido, realizando o ordenamento\n");
-        quickSort(jogadores, 0, linha-1);
+        quickSort(jogadores, 0, linha-1, &comp, &troca, &mem);
         break;
+
         case 3:
         printf("\nRadixSort escolhido, realizando o ordenamento\n");
         radixSort(jogadores, linha);
@@ -165,8 +174,8 @@ int main(int argc, char* argv[]){
     
     printf("\nInformações adicionais:\n");
     printf("Tempo de execução: %f\n", tempo);
-    printf("Trocas: %d, Comparações: %d\n", *troca, *comp);
-    printf("Gasto de memória: %d\n", *mem);
+    printf("Trocas: %d, Comparações: %d\n", troca, comp);
+    printf("Gasto de memória: %ld\n", mem);
 
     return 0;
 }
