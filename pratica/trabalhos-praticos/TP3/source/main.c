@@ -13,7 +13,8 @@
     são registrados e informados ao final da execução.
 
     As funções de ordenação estão no arquivo sort.c. Descrições dos valores de erro 
-    e das diferentes etapas do código encontram-se abaixo, em comentários como este. 
+    e das diferentes etapas do código encontram-se abaixo, em comentários como este,
+    demarcados por /*
 
     Autores: Filipe Carvalho e Jeann Batista
 */
