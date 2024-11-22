@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "sort.h"
 
@@ -78,7 +78,7 @@ void printa(tabela v[], int l){
 /*ERROS:
     -1 = arquivo não encontrado
     -2 = erro com os argumentos passados
-*/ 
+*/
 
 int main(int argc, char* argv[]){
 
@@ -112,8 +112,8 @@ int main(int argc, char* argv[]){
 
     /*PREENCHIMENTO DA TABELA
         -tabela de jogadores é criada com base no struct em sort.h
-        -tabela é preenchida com as informações do arquivo .csv
-        -o número de linhas é retornado pela função de leitura e guardado
+        -tabela é preenchida com as informações do arquivo .csv (os acentos foram removidos para padronizar as comparações com o strcmp)
+        -o número de linhas é retornado pela função de leitura e guardado (usado como limite superior)
         -depois da leitura ter sido feita, o arquivo já pode ser fechado 
     */
 
@@ -136,35 +136,32 @@ int main(int argc, char* argv[]){
         -o ordenamento prossegue por meio do algoritmo escolhido
     */
 
-    int troca, comp;//trocas e comparações feitas durante a execução do arquivo
-    troca = 0;
-    comp = 0;
-
-    long unsigned int mem;
-    mem = 0;
-
-    clock_t inicio = clock();
+    int troca = 0, comp = 0;//trocas e comparações feitas durante a execução do arquivo
+    long unsigned int mem = 0;//memória ocupada por variáveis geradas durante a execução
+    clock_t inicio;
 
     switch(alg){
 
         case 1:
         printf("\nBubbleSort escolhido, realizando o ordenamento\n");
+        inicio = clock();//horário de início da execução
         bubbleSort(jogadores, linha, &comp, &troca, &mem);
         break;
 
         case 2:
         printf("\nQuickSort escolhido, realizando o ordenamento\n");
+        inicio = clock();//horário de início da execução
         quickSort(jogadores, 0, linha-1, &comp, &troca, &mem);
         break;
 
         case 3:
         printf("\nRadixSort escolhido, realizando o ordenamento\n");
-        radixSort(jogadores, linha);
+        inicio = clock();//horário de início da execução
+        bucketSort(jogadores, linha);
         break;
     }
 
-    clock_t fim = clock();
-    double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    double tempo = (double)(clock() - inicio) / CLOCKS_PER_SEC;//horário de término - horário de início
 
     /*IMPRESSÃO DA TABELA ORDENADA E INFORMAÇÕES ADICIONAIS
     */
@@ -175,7 +172,7 @@ int main(int argc, char* argv[]){
     printf("\nInformações adicionais:\n");
     printf("Tempo de execução: %f\n", tempo);
     printf("Trocas: %d, Comparações: %d\n", troca, comp);
-    printf("Gasto de memória: %ld\n", mem);
+    printf("Gasto de memória: %ld Bytes\n", mem);
 
     return 0;
 }
