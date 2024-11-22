@@ -125,12 +125,6 @@ int main(int argc, char* argv[]){
 
     fclose(arq);//fechamento do arquivo
 
-    /*IMPRESSÃO DA TABELA ANTES DO ORDENAMENTO
-    */
-
-    printf("\tTabela de jogadores antes do ordenamento: \n\n");
-    printa(jogadores, linha);
-
     /*ORDENAMENTO
         -as variáveis troca e comp guardam o número de trocas e comparações feitas respectivamente
         -o valor de alg (argv[1]) decide o algoritmo que será usado
@@ -158,7 +152,7 @@ int main(int argc, char* argv[]){
         case 3:
         printf("\nRadixSort escolhido, realizando o ordenamento\n");
         inicio = clock();//horário de início da execução
-        bucketSort(jogadores, linha);
+        //bucketSort(jogadores, linha);
         break;
     }
 
