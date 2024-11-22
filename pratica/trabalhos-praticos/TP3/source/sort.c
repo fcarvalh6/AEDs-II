@@ -66,21 +66,25 @@ int reparticao(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned i
     (*mem) += sizeof(v[sup].nome);
     char* pivo = v[sup].nome;//essa função sempre escolhe o último valor como pivô
     
+    (*mem) += sizeof(int);
     int i = inf - 1;//i guarda um índice e é iniciado como estando fora do vetor
 
     for (int j = inf; j <= sup - 1; j++) { //para cada casa do vetor
+        (*cmp)++;
         if (strcmp(v[j].nome, pivo) < 0) { //joga todos os valores menores para esquerda e os maiores para a direita
             i++;
+            (*trc)++;//contador de trocas
             swap(v, i, j);//TODO: descrever melhor indices
         }
     }
-    
+    (*trc)++;
     swap(v, i+1, sup);//coloca o pivô no meio dos valores 
     return i + 1;//retorna a posição do pivô
 }
 
 //ordena o vetor por meio do algoritmo quicksort
 void quickSort(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned int *mem) {
+    (*cmp)++;
     if (inf < sup) {
         
         (*mem)+= sizeof(int);
