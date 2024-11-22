@@ -54,10 +54,10 @@ void bubbleSort(tabela v[], int n, int *cmp, int *trc, long unsigned int *mem){
 /*QUICK SORT
     O algoritmo ótimo escolhido foi o quickSort. Ele usa o método de dividir por conquistar e
     portanto é mais rápido na média que o bubbleSort. 
-    -reparticao divide o vetor, escolhendo um pivô e colocando todos os valores menores à esquerda
+    -a função reparticao divide o vetor, escolhendo um pivô e colocando todos os valores menores à esquerda
     e todos os valores maiores à direita. A repartição ocorre até o último caso (vetor com um item)
     assim garantindo que ele está ordenado. 
-    -quicksort realiza a repartição
+    -a função quickSort realiza a repartição
 */
 
 //reparte o vetor e separa eles em torno do pivô
