@@ -4,11 +4,11 @@
 #include <string.h>
 #include "sort.h"
 
-/*TODO:
-    -desconsiderar acentos
-    -calcular o gasto de memória do bbs
-    -adicionar contador na última comparação (?)
-    -aportuguesar
+/*NESTE ARQUIVO 
+    -estão contidas todas as funções referentes à ordenação da tabela:
+        -bubbleSort
+        -quickSort
+        -bucketSort
 */
 
 //swap é uma função de utilidade usada para trocar dois itens de posição
@@ -24,7 +24,7 @@ void swap(tabela v[], int j, int k){
     maiores sobem ao topo como "bolhas."
 */
 
-//ordena o vetor por meio do algorimo bubblesort
+//ordena o vetor por meio do algorimo bubbleSort
 void bubbleSort(tabela v[], int n, int *cmp, int *trc, long unsigned int *mem){
 
     (*mem) += sizeof(bool);//contador de gasto de memória
@@ -74,7 +74,7 @@ int reparticao(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned i
         if (strcmp(v[j].nome, pivo) < 0) { //joga todos os valores menores para esquerda e os maiores para a direita
             i++;
             (*trc)++;//contador de trocas
-            swap(v, i, j);//TODO: descrever melhor indices
+            swap(v, i, j);//j é a posição do valor analisado e i é onde esse valor deve ir
         }
     }
     (*trc)++;
@@ -82,7 +82,7 @@ int reparticao(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned i
     return i + 1;//retorna a posição do pivô
 }
 
-//ordena o vetor por meio do algoritmo quicksort
+//ordena o vetor por meio do algoritmo quickSort
 void quickSort(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned int *mem) {
     (*cmp)++;
     if (inf < sup) {
@@ -95,5 +95,61 @@ void quickSort(tabela v[], int inf, int sup, int *cmp, int *trc, long unsigned i
     }
 }
 
-/*RADIX SORT
+/*BUCKET SORT
+    O algoritmo em tempo linear escolhido foi o bucket sort. Ele cria "baldes" para a ordenação,
+    separando os nomes pela primeira letra. Após isso, cada balde é ordenado individualmente com
+    o quickSort. 
 */
+
+//ordena o vetor por meio do algoritmo bucketSort
+void bucketSort(tabela *v, int n, int *cmp, int *trc, unsigned long int *mem) {
+    (*mem) += sizeof(int);
+    int nBucket = 26;//existem 26 primeiras letras possíveis, então são 26 baldes
+    (*mem) += nBucket * sizeof(tabela*);
+    tabela **buckets = malloc(nBucket * sizeof(tabela*));//cria um vetor de baldes
+    (*mem) += nBucket * sizeof(int);
+    int *tamBucket = calloc(nBucket, sizeof(int));//cria um vetor de tamanho dos baldes (preenchido por 0 devido ao calloc)
+    
+    (*mem) += n * nBucket * sizeof(tabela);
+    tabela *espBucket = malloc(n * nBucket * sizeof(tabela));//espaço para todos os elementos de todos os baldes
+    for (int i = 0; i < nBucket; i++) {
+        buckets[i] = espBucket + i * n;//organiza o espaço para todos os baldes
+    }
+
+    for (int i = 0; i < n; i++) {
+        (*mem) += sizeof(int) + sizeof(char);
+        int iBucket = 0;//índice do balde onde o nome será inserido
+        char c = v[i].nome[0];//primeira letra do nome
+
+        /*O condicional abaixo define o índice do balde com base
+        na primeira letra do nome
+        */
+        (*cmp)++;
+        if(c >= 'A' && c <= 'Z')
+            iBucket = c - 'A';
+        else if(c >= 'a' && c <= 'z')
+            iBucket = c - 'a';
+
+        /*  -buckets são todos os baldes;
+            -iBucket é o índice do balde ao qual o nome será adicionado
+            -tamBucket é o índice da última posição do balde
+            -v[i] é o nome
+        */
+        buckets[iBucket][tamBucket[iBucket]++] = v[i];//o nome é adicionado ao balde correto
+    }
+
+    (*mem) += sizeof(int);
+    int index = 0;//index guarda onde os baldes serão adicionados na tabela final ordenada
+    for (int i = 0; i < nBucket; i++) {
+        (*cmp)++;
+        if (tamBucket[i] > 1) {
+            quickSort(buckets[i], 0, tamBucket[i] - 1, cmp, trc, mem);//todos os baldes são ordenados com o quickSort
+        }
+        memcpy(v + index, buckets[i], tamBucket[i] * sizeof(tabela));//baldes ordenados são copiados na saída
+        index += tamBucket[i];//posição de início do próximo balde
+    }
+
+    free(espBucket);
+    free(buckets);
+    free(tamBucket);
+}

@@ -150,9 +150,9 @@ int main(int argc, char* argv[]){
         break;
 
         case 3:
-        printf("\nRadixSort escolhido, realizando o ordenamento\n");
+        printf("\nBucketSort escolhido, realizando o ordenamento\n");
         inicio = clock();//horário de início da execução
-        //bucketSort(jogadores, linha);
+        bucketSort(jogadores, linha, &comp, &troca, &mem);
         break;
     }
 
