@@ -166,7 +166,7 @@ int main(int argc, char* argv[]){
     
     printf("\nInformações adicionais:\n");
     printf("Tempo de execução: %f\n", tempo);
-    printf("Trocas: %d, Comparações: %d\n", troca, comp);
+    printf("Comparações: %d\nTrocas: %d\n", comp, troca);
     printf("Gasto de memória: %ld Bytes\n", mem);
 
     return 0;
