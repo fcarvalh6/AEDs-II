@@ -124,7 +124,7 @@ no* remove_raiz(no* raiz){
         return tmp; //filho à direita
     }
 
-        if(raiz->direita == NULL){ //se não tem filho à direita
+    if(raiz->direita == NULL){ //se não tem filho à direita
         no* tmp = raiz->esquerda; //tem filho à esquerda e ele será usado pra substituir o pai removido
         free(raiz);
         return tmp; //filho à esquerda

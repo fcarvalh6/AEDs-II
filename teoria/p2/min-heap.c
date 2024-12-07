@@ -52,15 +52,15 @@ void insereheap(int *n, int h[HTAM], int k){
 //i é a raiz da subárvore a ser minimizada, n é a última posição do heap e h é o heap
 void minimizar(int i, int n, int h[HTAM]){
 
-    int e = fesq(i); //guarda a posição do filho esquerdo de i
-    int d = fdir(i); //guarda a posição do filho direito de i
+    int esq = fesq(i); //guarda a posição do filho esquerdo de i
+    int dir = fdir(i); //guarda a posição do filho direito de i
     int min = i; //o valor mínimo é iniciado como i, ele será comparado com seus filhos
 
-    if(e < n && h[e] < h[i]) //se o filho estiver dentro das dimensões do heap e for menor que o pai
-        min = e; //o mínimo agora é o esquerdo
+    if(esq < n && h[esq] < h[i]) //se o filho estiver dentro das dimensões do heap e for menor que o pai
+        min = esq; //o mínimo agora é o esquerdo
 
-    if(d < n && h[d] < h[min]) //se o filho estiver dentro das dimensões do heap e for menor que min
-        min = d; //o mínimo agora é o direito
+    if(dir < n && h[dir] < h[min]) //se o filho estiver dentro das dimensões do heap e for menor que min
+        min = dir; //o mínimo agora é o direito
 
     if(min != i){ //se algum filho tiver sido menor que o pai (quebrando a propriedade de min-heap)
         swap(&h[i], &h[min]); //troca o pai com o mínimo
