@@ -1,14 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-/**
- * TODO!
- * implementar as funções do encadeamento separado:
- *  - insere_hash_enc_separado
- *  - busca_hash_enc_separado
- *  - remove_hash_enc_separado
- *  - remove aberto
- */
+#include<string.h>
 
 /*-----------ESTRUTURAS DE DADOS---------------
 */
@@ -30,10 +22,11 @@ typedef struct hash_{
 */
 
 estudante * cria_estudante(char * nome, int matricula) {
-	estudante *e = malloc(sizeof (estudante));
-	e->matricula = matricula;
-	strncpy(e->nome, nome, strlen(nome));
-	return e;
+    estudante *e = malloc(sizeof(estudante));
+    e->matricula = matricula;
+    strncpy(e->nome, nome, 29);  // Leave space for null terminator
+    e->nome[29] = '\0';  // Explicitly null-terminate
+    return e;
 }
 
 hash * cria_hash(int TABLE_SIZE) {
@@ -134,33 +127,16 @@ int chaveDobra(int chave, int TAM){
     return chave;
 }
 
-/*produz um índice com base em uma string
-*/
-int valorString(char* str, int TAM){
-    int valor = 7;
-    int tam = strlen(str);
-    for(int i = 0; i < tam; i++)
-        valor = 31*valor + (int)str[i];
-    return valor%TAM;
-}
-
-/*o hashing universal minimiza colisões, reduzindo a probabilidade matematicamente,
-esta função provavelmente não vai cair na prova, já que não estava no código fonte.
-*/
-int chaveUniv(int chave, int TAM){
-    //implementação não foi incluida
-}
-
 /*-----------TRATAMENTO DE COLISÃO----------------
 */
 
 //sondagem linear
-int sondagem_linear(int pos, int i, int TABLE_SIZE) {
+int sondaLin(int pos, int i, int TABLE_SIZE) {
 	return ((pos + i) % TABLE_SIZE);
 }
 
 //sondagem quadrática
-int sondagem_quadratica(int pos, int i, int TABLE_SIZE) {
+int sondaQuad(int pos, int i, int TABLE_SIZE) {
 	pos = pos + 2 * i + 5 * i*i;
 	return (pos % TABLE_SIZE);
 }
@@ -175,71 +151,44 @@ int duploHash(int H1, int chave, int i, int TAM){
 /*-----------INSERÇÃO E BUSCA----------------
 */
 
-//SEM COLISÃO
-
-int insere_hash_s_colisao(hash * ha, estudante * e) {
-	if (ha == NULL || ha->qtd == ha->TABLE_SIZE) {
-		return 0;
-	}
-	int pos = chave_divisao(e->matricula, ha->TABLE_SIZE);
-
-	ha->estudantes[pos] = e;
-	ha->qtd++;
-	return 1;
-}
-
-char* busca_hash_s_colisao(hash * ha, int matricula) {
-	int pos = chave_divisao(matricula, ha->TABLE_SIZE);
-	return &(ha->estudantes[pos]->nome[0]);
-}
-
-//ENDEREÇAMENTO ABERTO
-
 int insereAberto(hash * ha, estudante * e) {
-	if (ha == NULL || ha->qtd == ha->TABLE_SIZE) {
+	if (ha == NULL || ha->qtd == ha->TABLE_SIZE) {//caso de tabela inexistente/cheia
 		return 0;
 	}
 	int pos, i;
-	pos = chave_dobra(e->matricula, ha->TABLE_SIZE);
-    /*OU
-    	pos = chave_divisao(e->matricula, ha->TABLE_SIZE);
-      OU
-	    pos = chave_multiplicacao(e->matricula, ha->TABLE_SIZE);
-    */
+    // pos = chave_divisao(e->matricula, ha->TABLE_SIZE);
+    // pos = chave_multiplicacao(e->matricula, ha->TABLE_SIZE);
+	pos = chaveDobra(e->matricula, ha->TABLE_SIZE);//consegue posição (sem tratar colisão)
 
+
+    //chama a função do tratamento de colisão até um lugar vazio ser encontrado
 	for (i = 0; i < ha->TABLE_SIZE; i++) {
-		pos = duplo_hash(pos, e->matricula, i, ha->TABLE_SIZE);
-        /*OU
-            pos = sondagem_linear(pos, i, ha->TABLE_SIZE);
-          OU
-		    pos = sondagem_quadratica(pos, i, ha->TABLE_SIZE);
-        */
+        // pos = sondagem_linear(pos, i, ha->TABLE_SIZE);
+        // pos = sondagem_quadratica(pos, i, ha->TABLE_SIZE);
+		pos = duploHash(pos, e->matricula, i, ha->TABLE_SIZE);
+        
 
-		if (ha->estudantes[pos] == NULL) {
-			ha->estudantes[pos] = e;
+		if (ha->estudantes[pos] == NULL) {//lugar vazio encontrado
+			ha->estudantes[pos] = e;//insere o valor
 			ha->qtd++;
-			return 1;
+			return 1;//1 quando há inserção
 		}
 	}
-	return 0;
+	return 0;//0 quando não há inserção
 }
 
 char* buscaAberto(hash * ha, int matricula) {
 	int i, pos;
+
+    // pos = chave_divisao(matricula, ha->TABLE_SIZE);
+    // pos = chave_multiplicacao(matricula, ha->TABLE_SIZE);
 	pos = chaveDobra(matricula, ha->TABLE_SIZE);
-	/*OU
-		pos = chave_divisao(matricula, ha->TABLE_SIZE);
-	  OU
-		pos = chave_multiplicacao(e->matricula, ha->TABLE_SIZE);
-	*/
+	
 
 	for (i = 0; i < ha->TABLE_SIZE; i++) {
+        pos = sondaLin(pos, i, ha->TABLE_SIZE);	
+        pos = sondaQuad(pos, i, ha->TABLE_SIZE);
 		pos = duploHash(pos, matricula, i, ha->TABLE_SIZE);
-		/*OU
-			pos = sondaLin(pos, i, ha->TABLE_SIZE);
-		  OU
-			pos = sondaQuad(pos, i, ha->TABLE_SIZE);
-		*/
 
 		if (ha->estudantes[pos] == NULL) {
 			return NULL;
@@ -250,24 +199,61 @@ char* buscaAberto(hash * ha, int matricula) {
 	return NULL;
 }
 
-char* removeAberto(){
+char* removeAberto(hash * ha, int matricula){
+    int i, pos;
+    // pos = chave_divisao(matricula, ha->TABLE_SIZE);
+    // pos = chave_multiplicacao(matricula, ha->TABLE_SIZE);
+	pos = chaveDobra(matricula, ha->TABLE_SIZE);
+	
 
-}
+	for (i = 0; i < ha->TABLE_SIZE; i++) {
+        // pos = sondaLin(pos, i, ha->TABLE_SIZE);		
+        // pos = sondaQuad(pos, i, ha->TABLE_SIZE);
+		pos = duploHash(pos, matricula, i, ha->TABLE_SIZE);
+		
 
-//ENDEREÇAMENTO FECHADO
-
-int insereFechado(){
-
-}
-
-char* buscaFechado(){
-
-}
-
-char* removeFechado(){
-
+		if (ha->estudantes[pos] == NULL) {
+			return NULL;
+		} else if (ha->estudantes[pos]->matricula == matricula) {
+            char* tmp = &(ha->estudantes[pos]->nome[0]);
+            ha->estudantes[pos] = NULL;
+			return tmp;
+		}
+	}
+	return NULL;
 }
 
 void main(){
-    const int TAM = 20;
+    
+    //criação da tabela hash
+    hash* ha = cria_hash(100);
+    // hash* ha = NULL;
+    // hash* ha = cria_hash(1);
+
+    char nome1[] = "Paulo", nome2[] = "Alberto", nome3[] = "Carla";
+    int mat1 = 123, mat2 = 223, mat3 = 12;
+
+    estudante* e1 = cria_estudante(nome1, mat1);
+    estudante* e2 = cria_estudante(nome2, mat2);
+    estudante* e3 = cria_estudante(nome3, mat3);
+
+    //teste de inserção
+    printf("Status da inserção 1: %d\n", insereAberto(ha, e1));
+    printf("Status da inserção 2: %d\n", insereAberto(ha, e2));
+    printf("Status da inserção 3: %d\n", insereAberto(ha, e3));
+    
+    //teste de busca
+    printf("\nResultado da busca 1: %s\n", buscaAberto(ha, mat1));
+    printf("Resultado da busca 2: %s\n", buscaAberto(ha, mat2));
+    printf("Resultado da busca 3: %s\n", buscaAberto(ha, mat3));
+
+    //teste de remoção
+    printf("\nResultado da remoção 1: %s\n", removeAberto(ha, mat1));
+    printf("Resultado da remoção 2: %s\n", removeAberto(ha, mat2));
+    printf("Resultado da remoção 3: %s\n", removeAberto(ha, mat3));
+
+    //conferindo remoção
+    printf("\nBusca por valor removido: %s\n", buscaAberto(ha, mat1));
+
+    libera_hash(ha);
 }
