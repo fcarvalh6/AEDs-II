@@ -186,8 +186,8 @@ char* buscaAberto(hash * ha, int matricula) {
 	
 
 	for (i = 0; i < ha->TABLE_SIZE; i++) {
-        pos = sondaLin(pos, i, ha->TABLE_SIZE);	
-        pos = sondaQuad(pos, i, ha->TABLE_SIZE);
+        // pos = sondaLin(pos, i, ha->TABLE_SIZE);	
+        // pos = sondaQuad(pos, i, ha->TABLE_SIZE);
 		pos = duploHash(pos, matricula, i, ha->TABLE_SIZE);
 
 		if (ha->estudantes[pos] == NULL) {

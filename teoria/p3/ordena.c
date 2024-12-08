@@ -50,7 +50,7 @@ void merge(int arr[], int l, int m, int r){
     int k = l;
     //ordena arr no intervalo passado inserindo os valores dos vetores laterais em ordem
     while(i < dimL && j < dimR){
-        if(L[i] <= R[i]){
+        if(L[i] <= R[j]){
             arr[k] = L[i];
             i++;
         }else{

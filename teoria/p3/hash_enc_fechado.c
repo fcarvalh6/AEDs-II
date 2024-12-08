@@ -139,7 +139,7 @@ int chaveDobra(int chave, int TAM){
 */
 
 int insereFechado(hash2* ha, estudante2* e) {
-    if (ha == NULL || e == NULL) return 0;
+    if (ha == NULL || e == NULL) return 1;
 
     //outras funções podem ser usadas aqui
     int pos = chaveDiv(e->matricula, ha->TABLE_SIZE);
@@ -148,24 +148,14 @@ int insereFechado(hash2* ha, estudante2* e) {
     if (ha->estudantes[pos] == NULL) {
         ha->estudantes[pos] = e;
     } else {
-        // Find end of the list and append
         estudante2* atual = ha->estudantes[pos];
         while (atual->prox != NULL) {
-            // Check for duplicate before inserting
-            if (atual->matricula == e->matricula) {
-                return 0;  // Duplicate key
-            }
             atual = atual->prox;
-        }
-        // Check last node for duplicate
-        if (atual->matricula == e->matricula) {
-            return 0;  // Duplicate key
         }
         atual->prox = e;
     }
-
     ha->qtd++;
-    return 1;
+    return 0;
 }
 
 // Search in hash table
@@ -182,7 +172,7 @@ char* buscaFechado(hash2* ha, int matricula) {
         atual = atual->prox;
     }
 
-    return NULL;  // Not found
+    return NULL;
 }
 
 // Remove from hash table
